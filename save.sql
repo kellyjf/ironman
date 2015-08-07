@@ -11,6 +11,12 @@ CREATE TABLE workouts (
 	foreign key(terrain_id) references terrains(id),
 	foreign key(gear_id) references gear(id)
 );
+INSERT INTO "workouts" VALUES(2,'Swim','2015-08-01T00:00:00',40,11.0,NULL,NULL);
+INSERT INTO "workouts" VALUES(4,'Run','2015-08-03',20,2.0,13,5);
+INSERT INTO "workouts" VALUES(6,'Swim','2015-08-03',75,3500.0,3,3);
+INSERT INTO "workouts" VALUES(11,'Bike','2015-08-05',65,20.0,6,1);
+INSERT INTO "workouts" VALUES(12,'Swim','2015-08-05',60,2000.0,3,3);
+INSERT INTO "workouts" VALUES(13,'Run','2015-08-06',24,2.4,13,5);
 CREATE TABLE gear (
 	id       integer   primary key autoincrement,
 	sport    varchar(32),      
@@ -44,4 +50,5 @@ INSERT INTO "terrains" VALUES(13,'Run','Treadmill',0.1);
 DELETE FROM sqlite_sequence;
 INSERT INTO "sqlite_sequence" VALUES('terrains',13);
 INSERT INTO "sqlite_sequence" VALUES('gear',6);
+INSERT INTO "sqlite_sequence" VALUES('workouts',13);
 COMMIT;
