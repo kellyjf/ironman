@@ -64,7 +64,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QComboBox" name="suiteCombo"/>
+      <widget class="QComboBox" name="suitCombo"/>
      </item>
     </layout>
    </item>
@@ -89,7 +89,7 @@
   <zorder>minutesLine</zorder>
   <zorder>yardsLine</zorder>
   <zorder>siteCombo</zorder>
-  <zorder>suiteCombo</zorder>
+  <zorder>suitCombo</zorder>
  </widget>
  <resources/>
  <connections>
