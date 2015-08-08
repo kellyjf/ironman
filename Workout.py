@@ -7,6 +7,7 @@ from PyQt4.QtSql import *
 from workout import *
 from gear import *
 from ironman import *
+from summary import *
 import sys
 
 
@@ -113,11 +114,23 @@ class WorkoutDialog (QDialog, Ui_Workout):
 
 		self.mapper.submit()
 
+class SummaryDialog(QDialog, Ui_Summary):
+	def __init__(self, parent=None):
+		super(SummaryDialog,self).__init__(parent)
+		self.setupUi(self)
+		self.model = QSqlQueryModel(self)
+		self.model.setQuery(QSqlQuery("select sport, sum(miles) from workouts group by 1 order by 1"))
+		self.tableView.setModel(self.model)
+
+
 class IronmanWindow(QMainWindow, Ui_Ironman):
 	def __init__(self, parent=None):
 		super(IronmanWindow,self).__init__(parent)
+
+
 		self.setupUi(self)
 		self.workoutModel = WorkoutModel(self)	
+		self.workoutModel.setSort(WorkoutModel.DATE, Qt.DescendingOrder)
 		self.tableView.setItemDelegate(QSqlRelationalDelegate(self))
 		self.tableView.setModel(self.workoutModel)
 		self.workoutModel.select()
@@ -125,11 +138,14 @@ class IronmanWindow(QMainWindow, Ui_Ironman):
 		self.tableView.resizeColumnsToContents()
 
 		self.workoutDialog=WorkoutDialog(self, self.workoutModel)
+		self.summaryDialog=SummaryDialog(self)
+
 		QObject.connect(self.addButton, SIGNAL("clicked()"), self.add)
 		QObject.connect(self.editButton, SIGNAL("clicked()"), self.edit)
 		QObject.connect(self.deleteButton, SIGNAL("clicked()"), self.delete)
 		QObject.connect(self.workoutDialog, SIGNAL("accepted()"), self.tableView.update)
 		QObject.connect(self.tableView, SIGNAL("doubleClicked(QModelIndex)"), self.edit)
+		QObject.connect(self.action_Summary, SIGNAL("activated()"), self.summaryDialog.show)
 
 	def add(self):
 		rows=self.workoutModel.rowCount()

@@ -1,5 +1,5 @@
 
-UIFILES := workout.py gear.py ironman.py
+UIFILES := workout.py gear.py ironman.py summary.py
 
 all : test
 

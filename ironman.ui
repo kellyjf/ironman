@@ -88,8 +88,15 @@
     <addaction name="action_run"/>
     <addaction name="action_Swim"/>
    </widget>
+   <widget class="QMenu" name="menu_Reports">
+    <property name="title">
+     <string>&amp;Reports</string>
+    </property>
+    <addaction name="action_Summary"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Sport"/>
+   <addaction name="menu_Reports"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Quit">
@@ -110,6 +117,11 @@
   <action name="action_Swim">
    <property name="text">
     <string>&amp;Swim</string>
+   </property>
+  </action>
+  <action name="action_Summary">
+   <property name="text">
+    <string>&amp;Summary</string>
    </property>
   </action>
  </widget>
