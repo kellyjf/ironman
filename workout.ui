@@ -67,7 +67,7 @@
       </widget>
      </item>
      <item row="1" column="3" colspan="2">
-      <widget class="QLineEdit" name="milesLine"/>
+      <widget class="QLineEdit" name="distanceLine"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_4">

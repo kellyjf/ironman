@@ -6,6 +6,12 @@ all : test
 workout.sqlite : train.sql
 	sqlite3 $@ < $<
 
+save:
+	sqlite3  -init savedb.sql workout.sqlite < /dev/null 
+
+restore:
+	sqlite3  workout.sqlite < save.sql 
+
 %.py : %.ui
 	pyuic4 --indent=0  -o $@ $<
 

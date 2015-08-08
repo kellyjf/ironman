@@ -67,7 +67,7 @@ class WorkoutDialog (QDialog, Ui_Workout):
 		self.mapper.setModel(self.model)
 		#self.mapper.addMapping(self.calendarWidget, WorkoutModel.DATE)
 		self.mapper.addMapping(self.minutesLine, WorkoutModel.MIN)
-		self.mapper.addMapping(self.milesLine, WorkoutModel.DIST)
+		self.mapper.addMapping(self.distanceLine, WorkoutModel.DIST)
 		self.mapper.addMapping(self.sportCombo, WorkoutModel.SPORT)
 
 		self.terrain=TerrainModel(self)
@@ -119,7 +119,7 @@ class SummaryDialog(QDialog, Ui_Summary):
 		super(SummaryDialog,self).__init__(parent)
 		self.setupUi(self)
 		self.model = QSqlQueryModel(self)
-		self.model.setQuery(QSqlQuery("select sport, sum(miles) from workouts group by 1 order by 1"))
+		self.model.setQuery(QSqlQuery("select sport as 'Sport', sum(distance) as 'Distance', sum(minutes) as 'Time' from workouts group by 1 order by 1"))
 		self.tableView.setModel(self.model)
 
 

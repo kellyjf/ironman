@@ -7,7 +7,7 @@ create table workouts (
 	sport    varchar(32),      
 	logtime  datetime,
 	minutes  integer,
-	miles    float,
+	distance    float,
 	terrain_id  integer,
 	gear_id     integer,
 	foreign key(terrain_id) references terrains(id),
