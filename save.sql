@@ -25,12 +25,12 @@ CREATE TABLE gear (
 	model    varchar(32),      
 	purchase_date   datetime
 );
-INSERT INTO "gear" VALUES(1,'Bike','Litespeed','Road','1/1/2001');
+INSERT INTO "gear" VALUES(1,'Bike','Litespeed','Classic','1/1/2001');
 INSERT INTO "gear" VALUES(2,'Bike','Cervelo','P2C','1/1/2009');
 INSERT INTO "gear" VALUES(3,'Swim','Agon','Jammers','1/1/2014');
 INSERT INTO "gear" VALUES(4,'Swim','Agon','Tights','1/1/2015');
-INSERT INTO "gear" VALUES(5,'Run','Mizuno','Blue','1/1/2015');
-INSERT INTO "gear" VALUES(6,'Run','Someone','Orange','1/1/2015');
+INSERT INTO "gear" VALUES(5,'Run','Mizuno','Wave Alchemy','1/1/2015');
+INSERT INTO "gear" VALUES(6,'Run','Adidas','Flats','1/1/2015');
 CREATE TABLE terrains (
 	id       integer   primary key autoincrement,
 	sport    varchar(32),      

@@ -26,17 +26,24 @@ class WorkoutModel (QSqlRelationalTableModel):
 		self.setHeaderData(WorkoutModel.TERRID, Qt.Horizontal, QVariant("Site"))
 		self.setHeaderData(WorkoutModel.GEARID, Qt.Horizontal, QVariant("Gear"))
 
-class GearModel (QSqlRelationalTableModel):
-	[ID,SPORT,BRAND, MODEL,DATE] = range(5)
+class GearModel (QSqlQueryModel):
+	[ID,SPORT,NAME,DATE] = range(4)
 	def __init__(self, parent=None):
 		super(GearModel,self).__init__(parent)
-		self.setTable("gear")
+		self.filter=""
 		self.setHeaderData(GearModel.ID, Qt.Horizontal, QVariant("ID"))
 		self.setHeaderData(GearModel.SPORT, Qt.Horizontal, QVariant("Sport"))
-		self.setHeaderData(GearModel.BRAND, Qt.Horizontal, QVariant("Brand"))
-		self.setHeaderData(GearModel.MODEL, Qt.Horizontal, QVariant("Model"))
+		self.setHeaderData(GearModel.NAME, Qt.Horizontal, QVariant("Brand"))
 		self.setHeaderData(GearModel.DATE, Qt.Horizontal, QVariant("Purchased"))
+		self.refresh()
 
+	def refresh(self):
+		self.setQuery("select id, sport, brand||' '||model as name, purchase_date from gear %s"%(self.filter))
+
+	def setFilter(self,filter):
+		self.filter="where %s"%(filter)
+		self.refresh()
+	
 class TerrainModel (QSqlRelationalTableModel):
 	[ID,SPORT,NAME, QUANTUM] = range(4)
 	def __init__(self, parent=None):
@@ -76,9 +83,8 @@ class WorkoutDialog (QDialog, Ui_Workout):
 		self.terrainCombo.setModelColumn(TerrainModel.NAME)
 
 		self.gear=GearModel(self)
-		self.gear.select()
 		self.gearCombo.setModel(self.gear)
-		self.gearCombo.setModelColumn(GearModel.MODEL)
+		self.gearCombo.setModelColumn(GearModel.NAME)
 
 		self.model.select()
 		self.mapper.toFirst()
@@ -135,6 +141,7 @@ class IronmanWindow(QMainWindow, Ui_Ironman):
 		self.tableView.setModel(self.workoutModel)
 		self.workoutModel.select()
 		self.tableView.setColumnHidden(WorkoutModel.ID, True)
+		self.tableView.setColumnHidden(WorkoutModel.GEARID, True)
 		self.tableView.resizeColumnsToContents()
 
 		self.workoutDialog=WorkoutDialog(self, self.workoutModel)
