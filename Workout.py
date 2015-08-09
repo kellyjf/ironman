@@ -125,8 +125,14 @@ class SummaryDialog(QDialog, Ui_Summary):
 		super(SummaryDialog,self).__init__(parent)
 		self.setupUi(self)
 		self.model = QSqlQueryModel(self)
-		self.model.setQuery(QSqlQuery("select sport as 'Sport', sum(distance) as 'Distance', sum(minutes) as 'Time' from workouts group by 1 order by 1"))
 		self.tableView.setModel(self.model)
+		QObject.connect(self.reportCombo, SIGNAL("currentIndexChanged(int)"),self.refresh)
+
+	def refresh(self, ndx):
+		if self.reportCombo.currentText() in [ 'By Week' ]:
+			self.model.setQuery(QSqlQuery("select strftime('%W', logtime) as 'Week', sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1,2 order by 1,2"))
+		else:
+			self.model.setQuery(QSqlQuery("select sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1 order by 1"))
 
 
 class IronmanWindow(QMainWindow, Ui_Ironman):
@@ -153,6 +159,20 @@ class IronmanWindow(QMainWindow, Ui_Ironman):
 		QObject.connect(self.workoutDialog, SIGNAL("accepted()"), self.tableView.update)
 		QObject.connect(self.tableView, SIGNAL("doubleClicked(QModelIndex)"), self.edit)
 		QObject.connect(self.action_Summary, SIGNAL("activated()"), self.summaryDialog.show)
+		QObject.connect(self.action_Bike, SIGNAL("activated()"), lambda: self.filter('Bike'))
+		QObject.connect(self.action_Swim, SIGNAL("activated()"), lambda: self.filter('Swim'))
+		QObject.connect(self.action_Run, SIGNAL("activated()"), lambda: self.filter('Run'))
+		QObject.connect(self.action_All, SIGNAL("activated()"), lambda: self.filter(None))
+
+	def filter(self, sport):
+		if sport:
+			self.workoutModel.setFilter("workouts.sport='%s'"%(sport))
+			#print self.workoutModel.lastError().text()
+			#print self.workoutModel.selectStatement()
+ 
+		else:
+			self.workoutModel.setFilter("")
+		self.workoutModel.select()
 
 	def add(self):
 		rows=self.workoutModel.rowCount()

@@ -85,8 +85,10 @@
      <string>&amp;Sport</string>
     </property>
     <addaction name="action_Bike"/>
-    <addaction name="action_run"/>
+    <addaction name="action_Run"/>
     <addaction name="action_Swim"/>
+    <addaction name="separator"/>
+    <addaction name="action_All"/>
    </widget>
    <widget class="QMenu" name="menu_Reports">
     <property name="title">
@@ -109,7 +111,7 @@
     <string>&amp;Bike</string>
    </property>
   </action>
-  <action name="action_run">
+  <action name="action_Run">
    <property name="text">
     <string>&amp;Run</string>
    </property>
@@ -122,6 +124,11 @@
   <action name="action_Summary">
    <property name="text">
     <string>&amp;Summary</string>
+   </property>
+  </action>
+  <action name="action_All">
+   <property name="text">
+    <string>&amp;All</string>
    </property>
   </action>
  </widget>

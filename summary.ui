@@ -24,7 +24,18 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="reportCombo"/>
+      <widget class="QComboBox" name="reportCombo">
+       <item>
+        <property name="text">
+         <string>Summary</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>By Week</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
