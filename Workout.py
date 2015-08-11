@@ -128,13 +128,16 @@ class SummaryDialog(QDialog, Ui_Summary):
 		self.tableView.setModel(self.model)
 		QObject.connect(self.reportCombo, SIGNAL("currentIndexChanged(int)"),self.refresh)
 
-	def refresh(self, ndx):
+	def refresh(self, ndx=0):
 		if self.reportCombo.currentText() in [ 'By Week' ]:
-			self.model.setQuery(QSqlQuery("select strftime('%W', logtime) as 'Week', sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1,2 order by 1,2"))
+			self.model.setQuery(QSqlQuery("select strftime('%W', logtime) as 'Week', sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1,2 order by 1 desc,2"))
 		else:
 			self.model.setQuery(QSqlQuery("select sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1 order by 1"))
 
-
+	def show(self):
+		self.refresh()
+		super(SummaryDialog,self).show()
+		
 class IronmanWindow(QMainWindow, Ui_Ironman):
 	def __init__(self, parent=None):
 		super(IronmanWindow,self).__init__(parent)
