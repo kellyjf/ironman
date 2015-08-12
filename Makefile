@@ -21,4 +21,8 @@ test: $(UIFILES)
 clean:
 	rm -f $(UIFILES) *.pyc
 
+plot:
+	sqlite3 workout.sqlite < sum.sql
+	gnuplot < sum.plot
+
 
