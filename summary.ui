@@ -32,7 +32,17 @@
        </item>
        <item>
         <property name="text">
-         <string>By Week</string>
+         <string>Weekly Volume</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Weekly Distance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Weekly Speed</string>
         </property>
        </item>
       </widget>

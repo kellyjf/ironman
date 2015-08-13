@@ -129,8 +129,33 @@ class SummaryDialog(QDialog, Ui_Summary):
 		QObject.connect(self.reportCombo, SIGNAL("currentIndexChanged(int)"),self.refresh)
 
 	def refresh(self, ndx=0):
-		if self.reportCombo.currentText() in [ 'By Week' ]:
+		report=self.reportCombo.currentText()
+		print report
+		if report in [ 'By Week' ]:
 			self.model.setQuery(QSqlQuery("select strftime('%W', logtime) as 'Week', sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1,2 order by 1 desc,2"))
+
+		elif report in [ 'Weekly Volume' ]:
+			sql="""select strftime("%W",logtime) as Week ,
+			round(sum(case when sport='Swim' then minutes end)/60.0,2) as 'Swim' ,
+			round(sum(case when sport='Bike' then minutes end)/60.0,2) as 'Bike' ,
+			round(sum(case when sport='Run' then minutes end)/60.0,2) as 'Run'  ,
+			round(sum(minutes)/60.0,2) as 'Total'  
+			from workouts group by 1 order by 1 desc"""
+			self.model.setQuery(QSqlQuery(sql))
+		elif report in [ 'Weekly Speed' ]:
+			sql="""select strftime("%W",logtime) as Week ,
+			round(sum(case when sport='Swim' then distance end)*60.0/sum(case when sport='Swim' then minutes end),2) as 'Swim' ,
+			round(sum(case when sport='Bike' then distance end)*60.0/sum(case when sport='Bike' then minutes end),2) as 'Bike' ,
+			round(sum(case when sport='Run' then distance end)*60.0/sum(case when sport='Run' then minutes end),2) as 'Run' 
+			from workouts group by 1 order by 1 desc"""
+			self.model.setQuery(QSqlQuery(sql))
+		elif report in [ 'Weekly Distance' ]:
+			sql="""select strftime("%W",logtime) as Week ,
+			round(sum(case when sport='Swim' then distance end),2) as 'Swim' ,
+			round(sum(case when sport='Bike' then distance end),2) as 'Bike' ,
+			round(sum(case when sport='Run' then distance end),2) as 'Run'  
+			from workouts group by 1 order by 1 desc"""
+			self.model.setQuery(QSqlQuery(sql))
 		else:
 			self.model.setQuery(QSqlQuery("select sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1 order by 1"))
 
