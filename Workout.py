@@ -130,7 +130,6 @@ class SummaryDialog(QDialog, Ui_Summary):
 
 	def refresh(self, ndx=0):
 		report=self.reportCombo.currentText()
-		print report
 		if report in [ 'By Week' ]:
 			self.model.setQuery(QSqlQuery("select strftime('%W', logtime) as 'Week', sport as 'Sport', sum(distance) as 'Distance', round(sum(minutes)/60.0,2) as 'Hours' from workouts group by 1,2 order by 1 desc,2"))
 
